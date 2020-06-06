@@ -7,6 +7,20 @@ const { users } = require("./data/users");
 
 let currentUser = {};
 
+const findUser = (arr, id) => {
+  let foundUser;
+
+  arr.forEach((user) => {
+    if (user._id === id) {
+      console.log("useruseruseruseruser22222", user);
+      foundUser = user;
+    }
+  });
+
+  console.log("found user", foundUser);
+  return foundUser;
+};
+
 // declare the 404 function
 const handleFourOhFour = (req, res) => {
   res.status(404).send("I couldn't find what you're looking for.");
@@ -17,7 +31,9 @@ const handleHomepage = (req, res) => {
 };
 
 const handleProfilePage = (req, res) => {
-  res.send(req.params.id);
+  res.status(200).render("pages/profile", {
+    user: findUser(users, req.params.id),
+  });
 };
 
 // -----------------------------------------------------
