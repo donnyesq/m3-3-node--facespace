@@ -16,7 +16,6 @@ const findUser = (arr, id) => {
     }
   });
 
-  console.log("found user", foundUser);
   return foundUser;
 };
 
@@ -40,6 +39,18 @@ const handleSignin = (req, res) => {
   res.status(200).render("pages/signin");
 };
 
+const handleName = (req, res) => {
+  let firstName = req.query.firstName;
+
+  let matchedUser = users.find((user) => user.name === firstName);
+
+  if (!matchedUser) {
+    res.status(404).redirect("/signin");
+  }
+
+  res.status(200).redirect(`/users/${matchedUser._id}`);
+};
+
 // -----------------------------------------------------
 // server endpoints
 express()
@@ -52,6 +63,7 @@ express()
   .get("/", handleHomepage)
   .get("/users/:id", handleProfilePage)
   .get("/signin", handleSignin)
+  .get("/getname", handleName)
 
   // a catchall endpoint that will send the 404 message.
   .get("*", handleFourOhFour)
