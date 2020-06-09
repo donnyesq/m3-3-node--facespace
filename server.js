@@ -12,7 +12,6 @@ const findUser = (arr, id) => {
 
   arr.forEach((user) => {
     if (user._id === id) {
-      console.log("useruseruseruseruser22222", user);
       foundUser = user;
     }
   });
@@ -32,6 +31,7 @@ const handleHomepage = (req, res) => {
 
 const handleProfilePage = (req, res) => {
   res.status(200).render("pages/profile", {
+    users: users,
     user: findUser(users, req.params.id),
   });
 };
