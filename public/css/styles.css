@@ -26,3 +26,11 @@ p.greeting {
   font-size: 20px;
   margin-left: auto;
 }
+
+li.homepage__all--user {
+  transition: all 0.5s ease-in-out;
+}
+
+li.homepage__all--user:hover {
+  transform: scale(0.9);
+}
