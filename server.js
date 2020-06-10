@@ -5,7 +5,7 @@ const morgan = require("morgan");
 
 const { users } = require("./data/users");
 
-let currentUser = {};
+let currentUser = undefined;
 
 const findUser = (arr, id) => {
   let foundUser;
@@ -15,7 +15,7 @@ const findUser = (arr, id) => {
       foundUser = user;
     }
   });
-
+  currentUser = foundUser;
   return foundUser;
 };
 
@@ -25,18 +25,29 @@ const handleFourOhFour = (req, res) => {
 };
 
 const handleHomepage = (req, res) => {
-  res.status(200).render("pages/homepage", { users: users });
+  if (currentUser !== undefined) {
+    currentUser = undefined;
+  }
+
+  res
+    .status(200)
+    .render("pages/homepage", { users: users, currentUser: currentUser });
 };
 
 const handleProfilePage = (req, res) => {
   res.status(200).render("pages/profile", {
     users: users,
     user: findUser(users, req.params.id),
+    currentUser: currentUser,
   });
 };
 
 const handleSignin = (req, res) => {
-  res.status(200).render("pages/signin");
+  if (currentUser !== undefined) {
+    currentUser = undefined;
+  }
+
+  res.status(200).render("pages/signin", { currentUser: currentUser });
 };
 
 const handleName = (req, res) => {
